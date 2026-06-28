@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 
-# Create your models here.
 class Cart(models.Model):
     user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
     
@@ -12,7 +11,7 @@ class Cart(models.Model):
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey('products.Product', on_delete=models.CASCADE)
-    quantity = models.IntegerField(blank=False, null=False ,validators=[MinValueValidator(1)])    
+    quantity = models.IntegerField(blank=False, null=False, validators=[MinValueValidator(1)])    
 
     def __str__(self):
         return f"{self.product.name} x{self.quantity} (Cart {self.cart.id})"

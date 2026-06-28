@@ -20,4 +20,7 @@ class Product(models.Model):
     
     def __str__(self):
         return f"{self.name} ({self.price}€)"
+    
+    def final_price(self):
+        return self.price * (1 - self.discount/100)
 
