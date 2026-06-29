@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block title %}Imposta la tua nuova password{% endblock title %}
+{% block title %}Modifica prodotto{% endblock title %}
 
 {% block content %}
 <div class="container mt-5" style="max-width: 700px;">   
     <div class="card shadow p-4">
-        <h2 class="mb-4 text-center">Imposta una nuova Password</h2>
+        <h2 class="mb-4 text-center">Modifica {{ object.name }}</h2>
         <form method="POST">{% csrf_token %}
         {{ form|crispy }}
             <button class="btn btn-primary w-100 mt-3">
-                Inviami l'email
+                Salva Modifiche
             </button>
         </form>
     </div>

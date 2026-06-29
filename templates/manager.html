@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}
+    Manager Section
+{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h2> Sezione Manager </h2>
+        <h5>Clicca sotto per creare un nuovo prodotto</h5>
+        <div class="btn-group mb-4">
+            <a href="{% url "product_create" %}" class="btn btn-sm btn-primary">Crea Nuovo prodotto</a>
+        </div>
+        <hr>
+    </div>
+    <div class="row">
+        <h5>Clicca sotto per creare una nuova Categoria</h5>
+        <div class="btn-group mb-4">
+            <a href="{% url "tag_create" %}" class="btn btn-sm btn-primary">Crea Nuova Categoria</a>
+        </div>
+        <hr>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}
+    Elimina categoria
+{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-5">
+    
+    <h2>Sei sicuro di voler eliminare "{{ object.name }}"?</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger">Elimina</button>
+        <a href="{% url "tag_list" %}" class="btn btn-secondary">
+            Annulla
+        </a>
+    </form>
+
+</div>
+
+{% endblock %}

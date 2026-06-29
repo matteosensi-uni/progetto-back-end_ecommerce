@@ -1,0 +1,13 @@
+
+
+| 15 | CRUD prodotti | create/update/delete (manager) | ⬜ da fare |
+| 16 | Carrello | aggiunta/rimozione prodotti | ⬜ da fare |
+| 17 | Ordini | checkout + storico | ⬜ da fare |
+| 18 | Permessi | limitare accessi per ruolo | ⬜ da fare |
+| 19 | UI migliorata | card, layout prodotti | ⬜ da fare |
+| 20 | Dati demo | prodotti + utenti | ⬜ da fare |
+| 21 | README | istruzioni progetto | ⬜ da fare |
+| 22 | Deploy | Render o simili | ⬜ finale |
+
+
+*** Nella pagina prodotti una volta fatta la pagina per i singoli prodotti e la pagina delle categories gestire bene i redirect
