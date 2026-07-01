@@ -18,7 +18,7 @@
                     <li><a href="{% url "home" %}" class="nav-link px-2 text-white">Home</a></li>
                     <li><a href="{% url "product_list" %}" class="nav-link px-2 text-white">Prodotti</a></li>
                     <li><a href="{% url "tag_list" %}" class="nav-link px-2 text-white">Categorie</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">Carrello</a></li>
+                    <li><a href="{% url "cart_view" %}" class="nav-link px-2 text-white">Carrello</a></li>
                     {% if request.user.is_manager %}
                         <li><a href="{% url "manager" %}" class="nav-link px-2 text-white">Manager</a></li>
                     {% endif %}

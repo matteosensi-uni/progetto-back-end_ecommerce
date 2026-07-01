@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 
 class Cart(models.Model):
-    user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
+    user = models.OneToOneField('users.CustomUser', on_delete=models.CASCADE)
     
     def __str__(self):
         return f"Cart of {self.user.username}"
@@ -11,10 +11,14 @@ class Cart(models.Model):
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey('products.Product', on_delete=models.CASCADE)
-    quantity = models.IntegerField(blank=False, null=False, validators=[MinValueValidator(1)])    
+    quantity = models.PositiveIntegerField(blank=False, null=False)    
 
     def __str__(self):
         return f"{self.product.name} x{self.quantity} (Cart {self.cart.id})"
+    
+    def total_price(self):
+            return self.product.final_price() * self.quantity
+
 
 
 class Order(models.Model):
@@ -29,7 +33,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey('products.Product', on_delete=models.CASCADE)
-    quantity = models.IntegerField(blank=False, null=False ,validators=[MinValueValidator(1)])
+    quantity = models.PositiveIntegerField(blank=False, null=False)
     actual_price_per_unit = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0)]) 
 
     def __str__(self):

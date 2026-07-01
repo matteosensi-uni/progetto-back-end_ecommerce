@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Carrello{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <h2 class="mb-4">Il tuo carrello</h2>
+
+    <div class="row">
+
+        <!-- 🛒 COLONNA SINISTRA (prodotti) -->
+        <div class="col-lg-8">
+
+            {% if not cart.cartitem_set.all %}
+                <div class="alert alert-info">
+                    Il carrello è vuoto.
+                </div>
+            {% endif %}
+            {% for item in cart.cartitem_set.all %}
+                <div class="card shadow-sm mb-3">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4">
+                            <img src="https://placehold.co/600x400?text={{ item.product.name }}" 
+                                 class="img-fluid rounded-start">
+                        </div>
+                        <div class="col-md-5 p-3">
+                            <h5>{{ item.product.name }}</h5>
+                            <p class="text-muted">
+                                {{ item.product.description|truncatechars:60 }}
+                            </p>
+                            {% if item.product.discount %}
+                                <p>
+                                    <s>{{ item.product.price }}€</s>
+                                    <strong class="text-danger">
+                                        {{ item.product.final_price|floatformat:2 }}€
+                                    </strong>
+                                </p>
+                            {% else %}
+                                <p>{{ item.product.price }}€</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-3 p-3">
+                            <form method="post" action="{% url "edit_cart" item.pk %}">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}" class="form-control mb-2">
+                                <button class="btn btn-primary btn-sm w-100">
+                                    Aggiorna
+                                </button>
+                            </form>
+                            <form method="post" action="{% url "remove_cart_item" item.pk %}" class="mt-2">
+                                {% csrf_token %}
+                                <button class="btn btn-danger btn-sm w-100">
+                                    Rimuovi
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm p-3 sticky-top" style="top: 80px;">
+
+                <h4 class="mb-3">Riepilogo</h4>
+
+                {% for item in cart.cartitem_set.all %}
+                <div class="d-flex justify-content-between mb-2">
+                    <span>{{item.product.name}} x {{item.quantity}}</span>
+                    <span>{{item.total_price | floatformat:2}}</span>
+                </div>
+                {% endfor%}
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Totale</span>
+                    <strong>{{ total_price|floatformat:2 }}€</strong>
+                </div>
+
+                <button class="btn btn-success w-100 mb-2" {% if not total_price %} disabled {% endif %}>
+                    Procedi al checkout
+                </button>
+
+                <a href="{% url 'product_list' %}" class="btn btn-outline-secondary w-100">
+                    Continua lo shopping
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

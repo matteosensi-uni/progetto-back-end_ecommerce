@@ -8,7 +8,8 @@ from .views import (ProductListView,
                              TagCreateView,
                                TagListView,
                                 TagUpdateView,
-                                 TagDeleteView )
+                                 TagDeleteView,
+                                  TagDetailView )
 
 
 urlpatterns = [
@@ -24,4 +25,5 @@ urlpatterns = [
     path("tags/<int:pk>/edit/", TagUpdateView.as_view(), name="tag_update"),
     path("tags/<int:pk>/delete/", TagDeleteView.as_view(), name="tag_delete"),
     path("tags/create/", TagCreateView.as_view(), name="tag_create"),
+    path("tags/<int:pk>/", TagDetailView.as_view(), name="tag_detail")
 ]
