@@ -1,4 +1,0 @@
-committare, fare un check generale e poi README + deploy
-
-| 21 | README | istruzioni progetto | ⬜ da fare |
-| 22 | Deploy | Render o simili | ⬜ finale |
