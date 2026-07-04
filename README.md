@@ -65,22 +65,27 @@ Della tabella User (derivata dal modello AbstractUser) non sono state usate tutt
 
 Il database è già stato popolato con prodotti, categorie, utenti, ordini e carrelli:
 Utenti:
+
 ![Tabella degli utenti](readme_imgs/image.png)
 
 
 Prodotti:
+
 ![alt text](readme_imgs/image-1.png)
 
 
 Categorie:
+
 ![alt text](readme_imgs/image-2.png)
 
 
 Ordini:
+
 ![alt text](readme_imgs/image-3.png)
 
 
 Carrelli:
+
 ![alt text](readme_imgs/image-4.png)
 ## Demo Accounts
 |Username | Password | email | Ruolo |
@@ -127,3 +132,4 @@ python manage.py runserver
 Apri l'applicazione su un browser all'indirizzo http://127.0.0.1:8000/
 
 # Link di deploy
+https://progetto-back-end-ecommerce.onrender.com
