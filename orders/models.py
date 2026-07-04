@@ -64,7 +64,7 @@ class Order(models.Model):
 #OrderItem model, modello per gli elementi dell'ordine
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product = models.ForeignKey('products.Product', on_delete=models.CASCADE)
+    product = models.ForeignKey('products.Product', on_delete=models.SET_NULL, null=True) #imposto on_delete=models.SET_NULL e null=True in modo da tenere gli orderItem di un prodotto eliminato
     quantity = models.PositiveIntegerField(blank=False, null=False)
     actual_price_per_unit = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)]) #si usa un attributo per il salvare prezzo in quanto il prezzo dei 
                                                                                                                     #  singoli prodotti potrebbe variare nel tempo

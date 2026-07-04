@@ -79,10 +79,15 @@
                     <strong>{{ cart.get_total_price|floatformat:2 }}€</strong>
                 </div>
 
-                <a href ="{% url "check_out" %}" class="btn btn-success w-100 mb-2" {% if not total_price %} disabled {% endif %}>
+                {% if not cart.get_total_price %}                
+                <button class="btn btn-success w-100 mb-2" disabled>
+                    Procedi al checkout
+                </button>
+                {% else %}
+                <a href ="{% url "check_out" %}" class="btn btn-success w-100 mb-2" >
                     Procedi al checkout
                 </a>
-
+                {% endif %}
                 <a href="{% url 'product_list' %}" class="btn btn-outline-secondary w-100">
                     Continua lo shopping
                 </a>

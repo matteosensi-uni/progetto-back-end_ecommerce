@@ -20,19 +20,18 @@
                     <a href="{% url "tag_delete" category.pk category.slug %}" class="btn btn-sm btn-danger">Elimina</a>
                     {% endif %}
                 </div> 
-                {% endif %}
             </div>
             <hr>
             <!-- lista prodotti -->
             <div class="d-flex overflow-auto gap-3 pb-2">
                 {% for product in category.product_set.all %}
-                    <div style = "min-width: 300px">
-                        {% include "includes/product_card.html" %}
-                    </div>
-                    {% empty %}
-                    <div class="alert alert-warning text-center shadow-sm w-100">
-                        Nessun Risultato!
-                    </div>
+                <div style = "min-width: 300px">
+                    {% include "includes/product_card.html" %}
+                </div>
+                {% empty %}
+                <div class="alert alert-warning text-center shadow-sm w-100">
+                    Nessun Risultato!
+                </div>
                 {% endfor %}
             </div>
         </div>

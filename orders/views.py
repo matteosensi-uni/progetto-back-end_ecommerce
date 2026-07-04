@@ -18,6 +18,7 @@ class CartView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["cart"], _ = Cart.objects.get_or_create(user=self.request.user)
         return context
+    
 #Vista per aggiungere elementi al carrello, collegata ai form di aggiunta dei prodotti nella pagina product_details.html
 class AddToCartView(LoginRequiredMixin, View):
     def post(self, request, pk):
@@ -51,6 +52,7 @@ class RemoveCartItemView(LoginRequiredMixin, View):
             return redirect("cart_view")
         cartItem.delete()
         return redirect("cart_view")
+    
     
 
 #Order Views
@@ -95,6 +97,11 @@ class CheckOutView(LoginRequiredMixin, CreateView):
         context["cart"], _ = Cart.objects.get_or_create(user=self.request.user)
         return context
     
+    def handle_no_permission(self):
+            return redirect("home")
+    
+
+
 class OrderSuccessView(LoginRequiredMixin, TemplateView):
     template_name = "orders/order_success.html"
 
@@ -112,6 +119,9 @@ class CustomerOrderListView(LoginRequiredMixin, OrderFilterMixin, ListView):
     def get_queryset(self):
         orders = Order.objects.all().filter(user=self.request.user)
         return self.apply_filters(orders)
+
+    def handle_no_permission(self):
+            return redirect("home")
 
 #vista per gli ordini per il manager (può vedere gli ordini di tutti gli utenti e modificare il loro stato)
 class ManagerOrderListView(LoginRequiredMixin, UserPassesTestMixin, OrderFilterMixin, ListView):
@@ -137,8 +147,6 @@ class ManagerOrderListView(LoginRequiredMixin, UserPassesTestMixin, OrderFilterM
     def test_func(self):
         return self.request.user.has_perm("orders.manage_orders")
     
-    def handle_no_permission(self):
-            return redirect("home")
     
 #View per modificare lo stato dell'ordine, collegata alla pagina order_management.html
 class UpdateOrderStatusView(LoginRequiredMixin, UserPassesTestMixin, View):
@@ -151,7 +159,5 @@ class UpdateOrderStatusView(LoginRequiredMixin, UserPassesTestMixin, View):
     #funzione per verificare le permissions dell'utente
     def test_func(self):
         return self.request.user.has_perm("orders.manage_orders")
-    
-    def handle_no_permission(self):
-            return redirect("home")
+
     

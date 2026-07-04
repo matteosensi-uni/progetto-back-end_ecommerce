@@ -88,8 +88,8 @@
                                 {% for item in order.orderitem_set.all %}
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                     <div>
-                                        <h6 class="mb-1"> {{ item.product.name }} x {{item.quantity }}</h6>
-                                        <p class="mb-1"> {{ item.product.description }} </p>
+                                        <h6 class="mb-1"> {{ item.product.name|default:"Prodotto eliminato" }} x {{item.quantity }}</h6>
+                                        <p class="mb-1"> {{ item.product.description|default:"Descrizione non disponibile" }} </p>
                                     </div>
                                     <strong> {{ item.actual_price_per_unit|floatformat:2 }}€ </strong>
                                 </li>
