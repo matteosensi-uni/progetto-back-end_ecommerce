@@ -35,7 +35,7 @@
                             </a>
                             <ul class="dropdown-menu text-small">
                                 <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Profilo</a></li>
-                                <li><a class="dropdown-item" href="#">I tuoi ordini</a></li>
+                                <li><a class="dropdown-item" href="{% url "order_list" %}">I tuoi ordini</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>                                    
                                     <form action="{% url 'logout' %}" method="post">
@@ -49,10 +49,10 @@
                         </div>
                     {% else %}
                         <a href="{% url 'login' %}" class="btn btn-outline-light me-2">
-                            Login
+                            Accedi
                         </a>
                         <a href="{% url 'signup' %}" class="btn btn-primary">
-                            Sign-up
+                            Registrati
                         </a>
                     {% endif %}
                 </div>

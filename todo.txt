@@ -1,5 +1,4 @@
+committare, fare un check generale e poi README + deploy
 
-| 17 | Ordini | checkout + storico | ⬜ da fare |
-| 18 | Permessi | limitare accessi per ruolo | ⬜ da fare |
 | 21 | README | istruzioni progetto | ⬜ da fare |
 | 22 | Deploy | Render o simili | ⬜ finale |

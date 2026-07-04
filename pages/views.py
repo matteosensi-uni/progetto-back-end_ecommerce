@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from products.models import Product, Tag
 
-# Create your views here.
+#Vista per la home page del sito
 class HomePageView(TemplateView):
     template_name = "home.html"
     
@@ -11,5 +11,6 @@ class HomePageView(TemplateView):
         context["discount_products"] = Product.objects.filter(discount__gt=0)[:8]
         return context
     
+#Vista per la pagina manager
 class ManagerView(TemplateView):
     template_name = "manager.html"

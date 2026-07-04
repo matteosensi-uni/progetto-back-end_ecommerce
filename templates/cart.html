@@ -76,12 +76,12 @@
                 {% endfor%}
                 <div class="d-flex justify-content-between mb-3">
                     <span>Totale</span>
-                    <strong>{{ total_price|floatformat:2 }}€</strong>
+                    <strong>{{ cart.get_total_price|floatformat:2 }}€</strong>
                 </div>
 
-                <button class="btn btn-success w-100 mb-2" {% if not total_price %} disabled {% endif %}>
+                <a href ="{% url "check_out" %}" class="btn btn-success w-100 mb-2" {% if not total_price %} disabled {% endif %}>
                     Procedi al checkout
-                </button>
+                </a>
 
                 <a href="{% url 'product_list' %}" class="btn btn-outline-secondary w-100">
                     Continua lo shopping

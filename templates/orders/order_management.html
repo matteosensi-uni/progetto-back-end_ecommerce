@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Visualizza Ordini{% endblock title %}
+
+
+{% block content %}
+{% regroup orders by user as user_orders %}
+<div class="container py-5">
+    <h2 class="mb-5">Ordini</h2>
+    <!-- Form per la ricerca -->
+    <form method="get" class="mb-4 p-1 rounded-3 border border-secondary">
+        <div class="row g-2 align-items-end p-2 pt-0">
+            <div class="col-md-4">
+                <label class="form-label">Cerca per numero ordine</label>
+                <input type="text" name="id" class="form-control" placeholder="Id Ordine" value="{{ request.GET.id }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Stato Ordine</label>
+                <select name="status" class="form-select">
+                    <option value="Tutti">Tutti</option>
+                    {% for value, label in statuses %}
+                    <option value="{{ value }}" {% if request.GET.status == value %} selected {% endif %}>
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Cerca per utente</label>
+                <input type="text" name="user" class="form-control" placeholder="Nome utente" value="{{ request.GET.user }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Cerca per data dell'ordine</label>
+                <input type="date" name="start_date" class="form-control" placeholder="Data di inizio" value="{{ request.GET.start_date }}">
+            </div>
+            <div class="col-md-4">
+                <input type="date" name="end_date" class="form-control" placeholder="Data di fine" value="{{ request.GET.end_date }}">
+            </div>
+            <div class="col-md-4 d-grid">
+                <button class="btn btn-primary">
+                    Cerca
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Lista ordini divisi per utente attraverso un accordion menu -->
+    <div class="accordion" id="ordersAccordion">
+        {% for group in user_orders %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ group.grouper.pk }}">
+                    <h4>{{ group.grouper.username|default:"Utente eliminato" }} </h4>
+                    <span class="ms-2 text-muted">
+                        ({{ group.list|length }} ordini)
+                    </span>
+                </button>
+            </h2>
+            
+            <!-- Lista ordini del singolo utente -->
+            <div id="collapse{{ group.grouper.pk }}" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {% for order in group.list %}
+                    <div class="card shadow border-0 mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1">Ordine #{{ order.pk }}</h5>
+                                <p class="mb-1"> {{ order.created_at|date:"d/m/Y" }} alle {{order.created_at|time:"H:i" }} </p>
+                            </div>
+                            <!-- form per la modifica dello stato dell'ordine -->
+                            <form method="post" class="d-flex gap-2 align-items-center" action = "{% url "status_update" order.pk %}">
+                                {% csrf_token %}
+                                <select name="status" class="form-select" value="{{order.status}}">
+                                    {% for value, label in statuses %}
+                                    <option value="{{ value }}" {% if order.status == value %}selected{% endif %}>
+                                        {{ label }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn btn-primary">
+                                    Salva
+                                </button>
+                            </form>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush mb-2">
+                                {% for item in order.orderitem_set.all %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <div>
+                                        <h6 class="mb-1"> {{ item.product.name }} x {{item.quantity }}</h6>
+                                        <p class="mb-1"> {{ item.product.description }} </p>
+                                    </div>
+                                    <strong> {{ item.actual_price_per_unit|floatformat:2 }}€ </strong>
+                                </li>
+                                {% endfor %}
+                                <li class="list-group-item d-flex justify-content-between fw-bold fs-5 px-0">
+                                    <p class="mb-0">Totale</p>
+                                    <p class="mb-0">{{ order.get_total_price|floatformat:2 }}€</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <!-- indirizzo email e di consegna -->
+                            <div class="row">
+                                <div class="col-md-4 mb-2">
+                                    <strong>Email</strong>
+                                    <p class="mb-0"> {{ order.email_used }}</p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <strong>Indirizzo di consegna</strong>
+                                    <p class="mb-0"> {{ order.order_address }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info text-center shadow-sm">
+            Nessun Risultato!
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

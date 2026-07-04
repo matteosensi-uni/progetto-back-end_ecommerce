@@ -14,7 +14,6 @@ from .views import (ProductListView,
 
 urlpatterns = [
     path("", ProductListView.as_view(), name="product_list"),
-
     # PRODUCTS
     path("products/<int:pk>/<slug:slug>/", ProductDetailView.as_view(), name="product_detail"),
     path("products/<int:pk>/<slug:slug>/edit/", ProductUpdateView.as_view(), name="product_update"),
@@ -22,8 +21,8 @@ urlpatterns = [
     path("products/create/", ProductCreateView.as_view(), name="product_create"),
     #TAGS
     path("tags/", TagListView.as_view(), name="tag_list"),
-    path("tags/<int:pk>/edit/", TagUpdateView.as_view(), name="tag_update"),
-    path("tags/<int:pk>/delete/", TagDeleteView.as_view(), name="tag_delete"),
+    path("tags/<int:pk>/<slug:slug>/edit/", TagUpdateView.as_view(), name="tag_update"),
+    path("tags/<int:pk>/<slug:slug>/delete/", TagDeleteView.as_view(), name="tag_delete"),
     path("tags/create/", TagCreateView.as_view(), name="tag_create"),
-    path("tags/<int:pk>/", TagDetailView.as_view(), name="tag_detail")
+    path("tags/<slug:slug>/", TagDetailView.as_view(), name="tag_detail")
 ]

@@ -10,13 +10,11 @@
             <img class="img-fluid" src="https://placehold.co/600x400?text={{ product.name }}">
         </div>
         <div class="col-md-6 mt-2">
-            <h1>{{ product.name }}</h1>
-            <p>{{ product.description }}</p>
+            <h1>{{product.name}}</h1>
+            <p>{{product.description}}</p>
             <div class="mb-3">
             {% for category in product.categories.all %}
-                <a href="{% url "tag_detail" category.pk %}" class="badge bg-primary text-decoration-none">
-                    {{ category.name }}
-                </a>
+                <a href="{% url "tag_detail" category.slug %}" class="badge bg-primary text-decoration-none"> {{category.name}} </a>
             {% endfor %}
             </div>
             {% if product.discount %}

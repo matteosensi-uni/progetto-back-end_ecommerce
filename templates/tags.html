@@ -5,30 +5,34 @@
 {% block content %}
 
 <div class="container py-4">
-
     <h2 class="mb-4">Categorie</h2>
-
+    <!-- Per ogni categoria si visualizzano i prodotti associati-->
     {% for category in categories %}
         <div class="mb-5">
             <div class="d-flex flex-row gap-3 align-items-center">
                 <h4 class="p-0 m-0">{{ category.name }}</h4>
+                <!-- controllo permessi per le operazioni sulle categorie-->
                 <div class="btn-group gap-2">
                     {% if perms.products.change_tag %}
-                    <a href="{% url "tag_update" category.pk %}" class="btn btn-sm btn-warning">Modifica</a>
+                    <a href="{% url "tag_update" category.pk category.slug %}" class="btn btn-sm btn-warning">Modifica</a>
                     {% endif %}
                     {% if perms.products.delete_tag %}
-                    <a href="{% url "tag_delete" category.pk %}" class="btn btn-sm btn-danger">Elimina</a>
+                    <a href="{% url "tag_delete" category.pk category.slug %}" class="btn btn-sm btn-danger">Elimina</a>
                     {% endif %}
-                </div>  
+                </div> 
+                {% endif %}
             </div>
             <hr>
+            <!-- lista prodotti -->
             <div class="d-flex overflow-auto gap-3 pb-2">
                 {% for product in category.product_set.all %}
                     <div style = "min-width: 300px">
                         {% include "includes/product_card.html" %}
                     </div>
                     {% empty %}
-                    <p class="text-muted">Nessun prodotto</p>
+                    <div class="alert alert-warning text-center shadow-sm w-100">
+                        Nessun Risultato!
+                    </div>
                 {% endfor %}
             </div>
         </div>

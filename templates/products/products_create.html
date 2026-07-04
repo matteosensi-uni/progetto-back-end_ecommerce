@@ -7,14 +7,11 @@
 <div class="container mt-5" style="max-width: 700px;">   
     <div class="card shadow p-4">
         <h2 class="mb-4 text-center">Crea un nuovo prodotto</h2>
-        <form method="POST">{% csrf_token %}
-        {{ form|crispy }}
-            <button class="btn btn-primary w-100 my-3">
-                Crea Prodotto
-            </button>
-            <a href="{% url "manager" %}" class="btn btn-secondary w-100">
-                Annulla
-            </a>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-primary w-100 my-3"> Crea Prodotto </button>
+            <a href="{% url "manager" %}" class="btn btn-secondary w-100"> Annulla </a>
         </form>
     </div>
 </div>
