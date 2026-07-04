@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "https://progetto-back-end-ecommerce.onrender.com"
+    "progetto-back-end-ecommerce.onrender.com"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
