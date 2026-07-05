@@ -16,7 +16,7 @@
 | **Framewok usato** | Django v5.2.14 |
 
 # Descrizione dell'applicazine
-L'applicazione in questione è un applicazione web che rappresenta un e-commerce di un negozio, questa quindi serve a permettere agli utenti di visualizzare i prodotti successivamente acquistarli sul web.
+L'applicazione in questione è un applicazione web che rappresenta un e-commerce di un negozio, questa quindi serve a permettere agli utenti di visualizzare i prodotti e successivamente acquistarli sul web.
 ## Features implementate
 Nell'applicazione ci sono tre gruppi distinti che differenziano i tipi di utenti:
 - **Customer**: Questo gruppo viene assegnato automaticamente quando un utente si registra al sito e come operazione principali puù fare:
@@ -40,7 +40,7 @@ Nell'applicazione ci sono tre gruppi distinti che differenziano i tipi di utenti
   - Gestire gli ordini, il che implica poter vedere gli ordini di tutti gli utenti e modificare lo stato di un ordine. Per la visualizzazione sono disponibili i filtri
 
 Questi ultimi due gruppi devono essere assegnati da un superuser ad un utente dalla pagina admin dell'applicazione.
-Inoltre Chiunque acceda al sito, anche se non è registrato ha le seguenti funzionalità:
+Inoltre, chiunque acceda al sito, anche se non è registrato, ha le seguenti funzionalità:
 - Visualizzare i prodotti del catalogo, con annessi filtri
 - Visualizzare i dettagli di un singolo prodotto
 - Visualizzare le categorie
@@ -88,6 +88,8 @@ Carrelli:
 
 ![alt text](readme_imgs/image-4.png)
 ## Demo Accounts
+Gli account già presenti nel database sono:
+
 |Username | Password | email | Ruolo |
 |-|-|-|-|
 | admin | admin12345! | admin@admin.test | Manager + admin django |
@@ -132,4 +134,4 @@ python manage.py runserver
 Apri l'applicazione su un browser all'indirizzo http://127.0.0.1:8000/
 
 # Link di deploy
-https://progetto-back-end-ecommerce.onrender.com
+Link per accedere al sito: https://progetto-back-end-ecommerce.onrender.com
