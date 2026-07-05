@@ -92,7 +92,7 @@ class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
          return super().form_valid(form)
 
     def test_func(self):
-        return self.request.user.has_perm("products.create_product")
+        return self.request.user.has_perm("products.add_product")
     
     def handle_no_permission(self):
             return redirect("home")
@@ -123,10 +123,11 @@ class TagCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
 
     def test_func(self):
-        return self.request.user.has_perm("products.create_tag")
-    
+        return self.request.user.has_perm("products.add_tag")
+  
     def handle_no_permission(self):
             return redirect("home")
+
 
 #Vista per modifivare il nome di una categoria 
 class TagUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
