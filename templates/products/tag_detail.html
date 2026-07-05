@@ -9,10 +9,10 @@
             <h2 class="m-0">{{ category.name }}</h2>
             <div class="btn-group gap-2">
                 {% if perms.products.change_tag %}
-                <a href="{% url "tag_update" category.pk %}" class="btn btn-sm btn-warning">Modifica</a>
+                <a href="{% url "tag_update" category.pk category.slug %}" class="btn btn-sm btn-warning">Modifica</a>
                 {% endif %}
                 {% if perms.products.delete_tag %}
-                <a href="{% url "tag_delete" category.pk %}" class="btn btn-sm btn-danger">Elimina</a>
+                <a href="{% url "tag_delete" category.pk category.slug %}" class="btn btn-sm btn-danger">Elimina</a>
                 {% endif %}
             </div>  
         </div>
