@@ -40,6 +40,7 @@ Nell'applicazione ci sono tre gruppi distinti che differenziano i tipi di utenti
   - Gestire gli ordini, il che implica poter vedere gli ordini di tutti gli utenti e modificare lo stato di un ordine. Per la visualizzazione sono disponibili i filtri
 
 Questi ultimi due gruppi devono essere assegnati da un superuser ad un utente dalla pagina admin dell'applicazione.
+Le pagine 'I tuoi ordini', 'profilo' e l'operazione di logout sono disponibili nel menu a tendina che appare dopo che si è effettuato l'accesso
 Inoltre, chiunque acceda al sito, anche se non è registrato, ha le seguenti funzionalità:
 - Visualizzare i prodotti del catalogo, con annessi filtri
 - Visualizzare i dettagli di un singolo prodotto
@@ -112,7 +113,7 @@ python -m venv myenv
 Attiva il virtual envirorment:
 - Windows
 ```
-.myenv\Scripts\activate
+myenv\Scripts\activate
 ```
 - Linux/MacOs:
 ```
@@ -123,13 +124,13 @@ Installa le dipendenze:
 pip install -r requirements.txt
 ```
 
-Applica le migrazioni nel caso fosse necessario. Non dovrebbe essere necessario in quanto il db è già stato creato ed è nella repository.
+Applica le migrazioni. Non dovrebbe essere necessario in quanto il db è già stato creato ed è nella repository.
 ```
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-Modifica la SECRET_KEY all'interno di settings.py impostandone una personale.
+Modifica la SECRET_KEY con una stringa abbastanza lunga e segreta all'interno di settings.py nella sottocartella e-commerce impostandone una personale.
 
 Avvia il server:
 ```
