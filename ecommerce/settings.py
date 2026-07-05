@@ -23,14 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
-    "progetto-back-end-ecommerce.onrender.com"
+    "progetto-back-end-ecommerce.onrender.com", "localhost", "127.0.0.1"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://progetto-back-end-ecommerce.onrender.com'
+    'https://progetto-back-end-ecommerce.onrender.com', 
+    'http://localhost:8000',
+    'http://127.0.0.1:8000' 
 ]
 
 
