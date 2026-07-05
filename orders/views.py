@@ -7,6 +7,7 @@ from .models import Cart, CartItem, Order, OrderItem
 from .forms import CheckOutForm
 from users.models import CustomUser
 from .mixins import OrderFilterMixin
+from django.contrib import messages
 
 #Cart Views
 #Vista della pagina principale del carrello, collegata alla pagina cart.html
@@ -32,6 +33,7 @@ class AddToCartView(LoginRequiredMixin, View):
         else:
             cartItem.quantity = quantity
         cartItem.save()
+        messages.success( request, f"{product.name} è stato aggiunto al carrello!")
         return redirect( product.get_absolute_url())
     
 #Vista per modificare gli elementi del carrello, collegata ai form di modifica dei prodotti nella pagina cart.html
@@ -43,6 +45,7 @@ class EditCartView(LoginRequiredMixin, View):
         quantity = int(request.POST.get("quantity", 1))
         cartItem.quantity = quantity
         cartItem.save()
+        messages.success( request, f"{cartItem.product.name} è stato modificato correttamente!")
         return redirect("cart_view")
 #Vista per rimuovere un elemento dal carrello, collegata al form di eliminazione dei prodotti nella pagina cart.html
 class RemoveCartItemView(LoginRequiredMixin, View):
@@ -51,6 +54,7 @@ class RemoveCartItemView(LoginRequiredMixin, View):
         if cartItem.cart.user != request.user: #controllo che la richiesta sia originata effettivamente dall'utente del carrello
             return redirect("cart_view")
         cartItem.delete()
+        messages.success( request, f"{cartItem.product.name} è stato rimosso dal carrello!")
         return redirect("cart_view")
     
     

@@ -6,6 +6,7 @@ from .forms import ProductForm
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.utils.text import slugify
+from django.contrib import messages
 
 # Viste Prodotti
 #Vista per la visualizzazione della lista completa dei prodotti (oppure con i filtri)
@@ -51,6 +52,10 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = ProductForm
     template_name = "products/products_update.html"
 
+    def form_valid(self, form):
+         messages.success(self.request, "Il prodotto è stato aggiornato correttamente!")
+         return super().form_valid(form)
+
     def get_success_url(self):
         return self.object.get_absolute_url()
     
@@ -59,6 +64,7 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def handle_no_permission(self):
             return redirect("home")
+    
 #Vista per eliminare un prodotto
 class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
@@ -69,12 +75,21 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     def handle_no_permission(self):
             return redirect("home")
+
+    def form_valid(self, form):
+         messages.success(self.request, "Il prodotto è stato eliminato correttamente!")
+         return super().form_valid(form)
+    
 #Vista per creare un prodotto
 class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Product
     template_name = "products/products_create.html"
     form_class = ProductForm
     success_url = reverse_lazy("product_list")
+
+    def form_valid(self, form):
+         messages.success(self.request, "Il prodotto è stato creato correttamente!")
+         return super().form_valid(form)
 
     def test_func(self):
         return self.request.user.has_perm("products.create_product")
@@ -100,10 +115,12 @@ class TagCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     #Controllo sul nome della categoria
     def form_valid(self, form):
-        slug = slugify(self.object.name)
-        if Tag.objects.filter(slug=slug).exclude(pk=self.object.pk).exists():
+        slug = slugify(form.cleaned_data["name"])
+        if Tag.objects.filter(slug=slug).exists():
             form.add_error( "name", "Esiste già un tag con questo nome.")
             return self.form_invalid(form)
+        messages.success(self.request, "La categoria è stata aggiunta correttamente!")
+        return super().form_valid(form)
 
     def test_func(self):
         return self.request.user.has_perm("products.create_tag")
@@ -124,6 +141,7 @@ class TagUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if Tag.objects.filter(slug=slug).exclude(pk=self.object.pk).exists():
             form.add_error( "name", "Esiste già un tag con questo nome.")
             return self.form_invalid(form)
+        messages.success(self.request, "La categoria è stata aggiornata correttamente!")
         return super().form_valid(form)
 
     def test_func(self):
@@ -142,6 +160,10 @@ class TagDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     def handle_no_permission(self):
             return redirect("home")
+    
+    def form_valid(self, form):
+        messages.success(self.request, "La categoria è stata eliminata correttamente!")
+        return super().form_valid(form)
 
 #Vista per la visualizzazione della singola categoria con i prodotti associati
 class TagDetailView(DetailView):

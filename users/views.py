@@ -3,9 +3,9 @@ from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import CustomUser
-
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, CustomUserChangeForm
 from django.contrib.auth.models import Group
+from django.contrib import messages
 
 #vista per la registrazione
 class SignUpView(CreateView):
@@ -23,11 +23,15 @@ class SignUpView(CreateView):
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = CustomUser
     form_class = CustomUserChangeForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("edit_profile")
     template_name = "edit_profile.html"
     
     def get_object(self):
         return self.request.user
+    
+    def form_valid(self, form):
+        messages.success(self.request, "Il profilo è stato aggiornato correttamente!")
+        return super().form_valid(form)
 
 #vista per l'accesso
 class MyLoginView(LoginView):
