@@ -48,6 +48,7 @@ Nell'applicazione ci sono tre gruppi distinti che differenziano i tipi di utenti
   - Gestire gli ordini, il che implica poter vedere gli ordini di tutti gli utenti e modificare lo stato di un ordine. Per la visualizzazione sono disponibili i filtri
 
 Questi ultimi due gruppi devono essere assegnati da un superuser ad un utente dalla pagina admin dell'applicazione.
+Le pagine 'I tuoi ordini', 'profilo' e l'operazione di logout sono disponibili nel menu a tendina che appare dopo che si è effettuato l'accesso
 Inoltre, chiunque acceda al sito, anche se non è registrato, ha le seguenti funzionalità:
 - Visualizzare i prodotti del catalogo, con annessi filtri
 - Visualizzare i dettagli di un singolo prodotto
@@ -154,7 +155,7 @@ python -m venv myenv
 Attiva il virtual envirorment:
 - Windows
 ```
-.myenv\Scripts\activate
+myenv\Scripts\activate
 ```
 - Linux/MacOs:
 ```
