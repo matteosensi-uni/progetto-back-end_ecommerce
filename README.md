@@ -112,7 +112,7 @@ python -m venv myenv
 Attiva il virtual envirorment:
 - Windows
 ```
-.venv\Scripts\activate
+.myenv\Scripts\activate
 ```
 - Linux/MacOs:
 ```
@@ -123,10 +123,14 @@ Installa le dipendenze:
 pip install -r requirements.txt
 ```
 
-Applica le migrazioni nel caso fosse necessario.
+Applica le migrazioni nel caso fosse necessario. Non dovrebbe essere necessario in quanto il db è già stato creato ed è nella repository.
 ```
+python manage.py makemigrations
 python manage.py migrate
 ```
+
+Modifica la SECRET_KEY all'interno di settings.py impostandone una personale.
+
 Avvia il server:
 ```
 python manage.py runserver
