@@ -75,6 +75,9 @@ class CheckOutView(LoginRequiredMixin, CreateView):
                 return self.form_invalid(form)
         order = form.save(commit=False) #creo l'ordine dai dati del form senza però committarlo, altrimenti darebbe errore perché manca l'utente
         order.user = self.request.user
+        if not cart.items.exists() or cart.total_price() < 0: #controllo che il carrello sia vuoto e che non si siano erorri del calcolo del totale
+            messages.error(self.request, "Il carrello è vuoto. Aggiungi prodotti prima di procedere al checkout.")
+            return self.form_invalid(form)
         order.save()
         for item in cartItems:
             #creo gli orderItem
