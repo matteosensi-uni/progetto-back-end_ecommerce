@@ -68,15 +68,15 @@ class CheckOutView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form): #se il form è valido procedo a creare l'ordine
         cart = Cart.objects.get(user=self.request.user)
-        order = form.save(commit=False) #creo l'ordine dai dati del form senza però committarlo, altrimenti darebbe errore perché manca l'utente
-        order.user = self.request.user
-        order.save()
         cartItems = cart.cartitem_set.all() #recupero i prodotti del carrello
-
         for item in cartItems:
             if(item.quantity > item.product.stock): #controllo la disponibilità dei prodotti
                 form.add_error(None, f"Non ci sono abbastanza prodotti per {item.product.name}. Disponibili: {item.product.stock}, Richiesti: {item.quantity}")
                 return self.form_invalid(form)
+        order = form.save(commit=False) #creo l'ordine dai dati del form senza però committarlo, altrimenti darebbe errore perché manca l'utente
+        order.user = self.request.user
+        order.save()
+        for item in cartItems:
             #creo gli orderItem
             OrderItem.objects.create(
                 order=order,
@@ -86,7 +86,7 @@ class CheckOutView(LoginRequiredMixin, CreateView):
             )
             item.product.stock -= item.quantity #aggiorno lo stock dei prodotti acquistati
             item.product.save()
-
+        
         cartItems.delete()  #elimino i prodotti ordinati dal carrello
         return redirect("order_success")
 
