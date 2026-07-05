@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from products.models import Product, Tag
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 #Vista per la home page del sito
 class HomePageView(TemplateView):
@@ -12,5 +13,8 @@ class HomePageView(TemplateView):
         return context
     
 #Vista per la pagina manager
-class ManagerView(TemplateView):
+class ManagerView(LoginRequiredMixin, UserPassesTestMixin , TemplateView):
     template_name = "manager.html"
+
+    def test_func(self):
+        return self.request.user.is_manager()

@@ -47,6 +47,7 @@ class EditCartView(LoginRequiredMixin, View):
         cartItem.save()
         messages.success( request, f"{cartItem.product.name} è stato modificato correttamente!")
         return redirect("cart_view")
+    
 #Vista per rimuovere un elemento dal carrello, collegata al form di eliminazione dei prodotti nella pagina cart.html
 class RemoveCartItemView(LoginRequiredMixin, View):
     def post(self, request, pk):
@@ -154,6 +155,9 @@ class ManagerOrderListView(LoginRequiredMixin, UserPassesTestMixin, OrderFilterM
     def test_func(self):
         return self.request.user.has_perm("orders.manage_orders")
     
+    def handle_no_permission(self):
+            return redirect("home")
+    
     
 #View per modificare lo stato dell'ordine, collegata alla pagina order_management.html
 class UpdateOrderStatusView(LoginRequiredMixin, UserPassesTestMixin, View):
@@ -167,5 +171,8 @@ class UpdateOrderStatusView(LoginRequiredMixin, UserPassesTestMixin, View):
     #funzione per verificare le permissions dell'utente
     def test_func(self):
         return self.request.user.has_perm("orders.manage_orders")
+    
+    def handle_no_permission(self):
+            return redirect("home")
 
     
