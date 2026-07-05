@@ -124,7 +124,7 @@ class TagCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.has_perm("products.add_tag")
-  
+
     def handle_no_permission(self):
             return redirect("home")
 
